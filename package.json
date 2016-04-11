@@ -1,0 +1,20 @@
+{
+  "name": "butter-provider-movies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "butter-provider": "^0.2.0",
+    "butter-sanitize": "^0.1.1",
+    "debug": "^2.2.0",
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "request": "^2.70.0",
+    "tape": "^4.4.0"
+  }
+}
