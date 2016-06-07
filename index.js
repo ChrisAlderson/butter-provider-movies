@@ -36,6 +36,8 @@ MovieApi.prototype.extractIds = function (items) {
 
 function format(movies) {
     var results = _.chain(movies).map(function (movie) {
+
+
         return {
             type: 'movie',
             imdb_id: movie.imdb_id,
@@ -50,7 +52,8 @@ function format(movies) {
             synopsis: movie.synopsis,
             trailer: movie.trailer || false,
             certification: movie.certification,
-            torrents: movie.torrents
+            torrents: movie.torrents.en,
+            langs: movie.torrents
         };
     }).value();
 
@@ -88,6 +91,10 @@ function get(index, url, that) {
     });
 
     return deferred.promise;
+};
+
+MovieApi.prototype.resolveStream = function (src, filters, data) {
+    return data.langs[filters.lang][filters.quality];
 };
 
 MovieApi.prototype.fetch = function (filters) {
