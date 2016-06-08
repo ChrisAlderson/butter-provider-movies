@@ -16,5 +16,9 @@
     "q": "^1.4.1",
     "request": "^2.70.0",
     "tape": "^4.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChrisAlderson/butter-provider-movies.git"
   }
 }
