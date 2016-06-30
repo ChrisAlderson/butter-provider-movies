@@ -50,7 +50,7 @@ function format(movies) {
             synopsis: movie.synopsis,
             trailer: movie.trailer || false,
             certification: movie.certification,
-            torrents: movie.torrents.en | movie.torrents[Object.keys(movie.torrents)[0]],
+            torrents: movie.torrents['en'] || movie.torrents[Object.keys(movie.torrents)[0]],
             langs: movie.torrents
         };
     }).value();
