@@ -35,25 +35,29 @@ MovieApi.prototype.extractIds = function (items) {
 };
 
 function format(movies) {
-    var results = _.chain(movies).map(function (movie) {
-        return {
-            type: 'movie',
-            imdb_id: movie.imdb_id,
-            title: movie.title,
-            year: movie.year,
-            genre: movie.genres,
-            rating: parseInt(movie.rating.percentage, 10) / 10,
-            runtime: movie.runtime,
-            image: movie.images.cover,
-            cover: movie.images.cover,
-            backdrop: movie.images.fanart,
-            synopsis: movie.synopsis,
-            trailer: movie.trailer || false,
-            certification: movie.certification,
-            torrents: movie.torrents['en'] || movie.torrents[Object.keys(movie.torrents)[0]],
-            langs: movie.torrents
-        };
-    }).value();
+    var results = [];
+
+    movies.forEach(function (movie) {
+        if (movie.torrents) {
+          results.push({
+              type: 'movie',
+              imdb_id: movie.imdb_id,
+              title: movie.title,
+              year: movie.year,
+              genre: movie.genres,
+              rating: parseInt(movie.rating.percentage, 10) / 10,
+              runtime: movie.runtime,
+              image: movie.images.cover,
+              cover: movie.images.cover,
+              backdrop: movie.images.fanart,
+              synopsis: movie.synopsis,
+              trailer: movie.trailer !== null ? movie.trailer : false,
+              certification: movie.certification,
+              torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
+              langs: movie.torrents
+          });
+        }
+    });
 
     return {
         results: sanitize(results),
