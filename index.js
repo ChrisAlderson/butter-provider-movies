@@ -31,7 +31,7 @@ MovieApi.prototype.config = {
 };
 
 MovieApi.prototype.extractIds = function (items) {
-    return _.pluck(items.results, 'imdb_id');
+    return _.map(items.results, 'imdb_id');
 };
 
 function format(movies) {
@@ -81,7 +81,7 @@ function get(index, url, that) {
             if (index + 1 >= that.apiURL.length) {
                 return deferred.reject(err || 'Status Code is above 400');
             } else {
-                return getFetch(index + 1, url);
+                return get(index + 1, url, that);
             }
         } else if (!data || data.error) {
             err = data ? data.status_message : 'No data returned';
