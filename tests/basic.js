@@ -44,7 +44,9 @@ tape('fetch', function (t) {
     var P = load();
     var I = new P(config.args);
 
-    I.fetch().then(function (r) {
+    I.fetch({
+      page: 1
+    }).then(function (r) {
         debug ('fetch', r)
         t.ok(r, 'we were able to fetch')
         t.ok(r.hasMore===true || r.hasMore===false, 'we have a hasMore field that is a boolean: ')
