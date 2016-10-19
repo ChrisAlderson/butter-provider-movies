@@ -8,7 +8,7 @@ var timeout = 10000;
 
 var config = {
   args: {
-    apiURL: "http://localhost:5000/"
+    apiURL: "http://movies-v2.api-fetch.website/"
   }
 };
 
