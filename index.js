@@ -120,7 +120,6 @@ MovieApi.prototype.fetch = function (filters) {
     var params = {};
     params.sort = 'seeds';
     params.limit = '50';
-    filters.page = 1;
 
     if (filters.keywords) {
         params.keywords = filters.keywords.replace(/\s/g, '% ');
