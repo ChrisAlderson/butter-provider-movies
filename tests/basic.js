@@ -8,7 +8,7 @@ var timeout = 10000;
 
 var config = {
   args: {
-    apiURL: ""
+    apiURL: "http://localhost:5000/"
   }
 };
 
