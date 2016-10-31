@@ -47,7 +47,7 @@ function format(movies) {
               genre: movie.genres,
               rating: parseInt(movie.rating.percentage, 10) / 10,
               runtime: movie.runtime,
-              image: movie.images,
+              images: movie.images,
               cover: movie.images.poster,
               backdrop: movie.images.fanart,
               synopsis: movie.synopsis,
