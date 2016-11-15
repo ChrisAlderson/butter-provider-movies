@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "butter-provider": "^0.3.1",
+    "butter-provider": "^0.4.0",
     "butter-sanitize": "^0.1.1",
     "debug": "^2.2.0",
-    "lodash": "^4.13.1",
+    "lodash": "^4.17.1",
     "q": "^1.4.1",
     "request": "^2.70.0",
     "tape": "^4.4.0"
