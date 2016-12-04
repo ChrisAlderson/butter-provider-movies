@@ -13,7 +13,7 @@
     "butter-sanitize": "^0.1.1",
     "lodash": "^4.17.2",
     "q": "^1.4.1",
-    "request": "^2.79.0",
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "debug": "^2.3.3",
