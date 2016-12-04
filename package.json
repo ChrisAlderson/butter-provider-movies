@@ -1,6 +1,6 @@
 {
   "name": "butter-provider-movies",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Butter provider for movies, completable with the popcorn-api.",
   "main": "index.js",
   "scripts": {
