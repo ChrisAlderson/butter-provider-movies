@@ -9,15 +9,14 @@ var request = require('request');
 var sanitize = require('butter-sanitize');
 
 var MovieApi = function(args) {
-	var that = this;
+	if (!(this instanceof MovieApi)) return new MovieApi(args);
 
-	MovieApi.super_.call(this);
+	Generic.call(this, args);
 
-	if (args.apiURL) this.apiURL = args.apiURL.split(',');
-
-	this.language = args.language;
-	this.quality = args.quality;
-	this.translate = args.translate;
+	this.apiURL = this.args.apiURL || ['https://movies-v2.api-fetch.website/'];
+	this.language = this.args.language;
+	this.quality = this.args.quality;
+	this.translate = this.args.translate;
 };
 
 inherits(MovieApi, Generic);
@@ -26,7 +25,10 @@ MovieApi.prototype.config = {
 	name: 'MovieApi',
 	uniqueId: 'imdb_id',
 	tabName: 'MovieApi',
-	type: 'movie',
+	type: Generic.TabType.MOVIE,
+  args: {
+    apiURL: Generic.ArgType.ARRAY
+	},
 	metadata: 'trakttv:movie-metadata'
 };
 
