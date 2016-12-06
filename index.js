@@ -175,7 +175,14 @@ MovieApi.prototype.random = function () {
 };
 
 MovieApi.prototype.detail = function (torrent_id, old_data, debug) {
-	return Q(old_data);
+  if (old_data) {
+    return Q(old_data);
+  }
+
+  var that = this;
+	var index = 0;
+	var url = that.apiURL[index] + 'movie' + torrent_id;
+	return get(index, url, that).then(formatDetail);
 };
 
 module.exports = MovieApi;
