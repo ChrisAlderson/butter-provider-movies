@@ -33,7 +33,7 @@ MovieApi.prototype.extractIds = function(items) {
 	return _.map(items.results, 'imdb_id');
 };
 
-function format(movies) {
+function formatFetch(movies) {
 	var results = [];
 
 	movies.forEach(function(movie) {
@@ -64,7 +64,29 @@ function format(movies) {
 		results: sanitize(results),
 		hasMore: true
 	};
-};
+}
+
+function formatDetail(movie) {
+  return {
+    type: 'movie',
+    imdb_id: movie.imdb_id,
+    title: movie.title,
+    year: movie.year,
+    genre: movie.genres,
+    rating: parseInt(movie.rating.percentage, 10) / 10,
+    runtime: movie.runtime,
+    images: movie.images,
+    image: movie.images.poster,
+    cover: movie.images.poster,
+    backdrop: movie.images.fanart,
+    poster: movie.images.poster,
+    synopsis: movie.synopsis,
+    trailer: movie.trailer !== null ? movie.trailer : false,
+    certification: movie.certification,
+    torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
+    langs: movie.torrents
+  };
+}
 
 function processCloudFlareHack(options, url) {
 	var req = options;
@@ -104,7 +126,7 @@ function get(index, url, that) {
 			console.error('API error:', err);
 			return deferred.reject(err);
 		} else {
-			return deferred.resolve(format(data));
+			return deferred.resolve(data);
 		}
 	});
 
@@ -142,14 +164,14 @@ MovieApi.prototype.fetch = function (filters) {
 
 	var index = 0;
 	var url = that.apiURL[index] + 'movies/' + filters.page + '?' + querystring.stringify(params).replace(/%25%20/g, '%20');
-	return get(index, url, that);
+	return get(index, url, that).then(formatFetch);
 };
 
 MovieApi.prototype.random = function () {
 	var that = this;
 	var index = 0;
-	var url = that.apiURL[index] + '/random/movie';
-	return get(index, url, that);
+	var url = that.apiURL[index] + 'random/movie';
+	return get(index, url, that).then(formatDetail);
 };
 
 MovieApi.prototype.detail = function (torrent_id, old_data, debug) {
