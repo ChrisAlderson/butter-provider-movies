@@ -3,8 +3,12 @@
   "version": "1.0.3",
   "description": "A Butter provider for movies, completable with the popcorn-api.",
   "main": "index.js",
+  "butter": {
+    "timeout": 20000,
+    "testArgs": "MovieApi?&apiURL=https://movies-v2.api-fetch.website/,cloudflare+https://movies-v2.api-fetch.website,http://localhost:5000/"
+  },
   "scripts": {
-    "test": "node tests/basic.js"
+    "test": "tape ./node_modules/butter-test-provider/tests/*"
   },
   "author": "",
   "license": "ISC",
