@@ -14,6 +14,8 @@ var MovieApi = function(args) {
 	Generic.call(this, args);
 
 	this.apiURL = this.args.apiURL || ['https://movies-v2.api-fetch.website/'];
+  this.lang = this.args.lang || 'en';
+  this.quality = this.args.quality || '720p';
 };
 
 inherits(MovieApi, Generic);
@@ -24,7 +26,9 @@ MovieApi.prototype.config = {
 	tabName: 'MovieApi',
 	type: Generic.TabType.MOVIE,
   args: {
-    apiURL: Generic.ArgType.ARRAY
+    apiURL: Generic.ArgType.ARRAY,
+    lang: Generic.ArgType.STRING,
+    quality: Generic.ArgType.STRING
 	},
 	metadata: 'trakttv:movie-metadata'
 };
@@ -101,7 +105,7 @@ function processCloudFlareHack(options, url) {
 		});
 	}
 	return req;
-};
+}
 
 function get(index, url, that) {
 	var deferred = Q.defer();
@@ -131,9 +135,12 @@ function get(index, url, that) {
 	});
 
 	return deferred.promise;
-};
+}
 
 MovieApi.prototype.resolveStream = function (src, filters, data) {
+  filters.lang = filters.lang ? filters.lang : this.lang;
+  filters.quality = filters.quality ? filters.quality : this.quality;
+
 	return data.langs[filters.lang][filters.quality];
 };
 
