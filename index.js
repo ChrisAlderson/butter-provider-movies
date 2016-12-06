@@ -14,9 +14,6 @@ var MovieApi = function(args) {
 	Generic.call(this, args);
 
 	this.apiURL = this.args.apiURL || ['https://movies-v2.api-fetch.website/'];
-	this.language = this.args.language;
-	this.quality = this.args.quality;
-	this.translate = this.args.translate;
 };
 
 inherits(MovieApi, Generic);
