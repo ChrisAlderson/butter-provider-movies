@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "butter-test-provider": "0.0.5",
-    "debug": "^2.3.3",
     "tape": "^4.6.3"
   },
   "repository": {
