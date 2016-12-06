@@ -1,6 +1,6 @@
 # Butter Provider Movies
 
-A Butter provider for movies, completable with the [popcorn-api](https://github.com/popcorn-official/popcorn-api)
+A Butter provider for movies, completable with the [popcorn-api](https://github.com/popcorn-official/popcorn-api).
 
 ### Multi language
 
