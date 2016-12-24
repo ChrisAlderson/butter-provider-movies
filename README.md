@@ -1,5 +1,7 @@
 # Butter Provider Movies
 
+[![Build Status](https://travis-ci.org/ChrisAlderson/butter-provider-movies.svg?branch=master)](https://travis-ci.org/ChrisAlderson/butter-provider-movies)
+
 A Butter provider for movies, completable with the [popcorn-api](https://github.com/popcorn-official/popcorn-api).
 
 ### Multi language
