@@ -14,6 +14,7 @@
   "dependencies": {
     "butter-provider": "^0.5.1",
     "butter-sanitize": "^0.1.1",
+    "butter-test-provider": "https://github.com/butterproviders/butter-test-provider",
     "lodash": "^4.17.2",
     "q": "^1.4.1",
     "request": "^2.79.0"
