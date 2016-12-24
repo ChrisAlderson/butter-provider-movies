@@ -59,7 +59,8 @@ function formatFetch(movies) {
 				trailer: movie.trailer !== null ? movie.trailer : false,
 				certification: movie.certification,
 				torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
-				langs: movie.torrents
+				langs: movie.torrents,
+        subtitle: {}
 			});
 		}
 	});
@@ -88,7 +89,8 @@ function formatDetail(movie) {
     trailer: movie.trailer !== null ? movie.trailer : false,
     certification: movie.certification,
     torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
-    langs: movie.torrents
+    langs: movie.torrents,
+    subtitle: {}
   };
 }
 
