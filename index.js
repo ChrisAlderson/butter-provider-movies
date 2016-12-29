@@ -15,7 +15,6 @@ var MovieApi = function(args) {
 
 	this.apiURL = this.args.apiURL || ['https://movies-v2.api-fetch.website/'];
   this.lang = this.args.lang || 'en';
-  this.quality = this.args.quality || '720p';
 };
 
 inherits(MovieApi, Generic);
@@ -24,44 +23,32 @@ MovieApi.prototype.config = {
 	name: 'MovieApi',
 	uniqueId: 'imdb_id',
 	tabName: 'MovieApi',
-	type: Generic.TabType.MOVIE,
   args: {
     apiURL: Generic.ArgType.ARRAY,
-    lang: Generic.ArgType.STRING,
-    quality: Generic.ArgType.STRING
+    lang: Generic.ArgType.STRING
 	},
 	metadata: 'trakttv:movie-metadata'
 };
 
-MovieApi.prototype.extractIds = function(items) {
-	return _.map(items.results, 'imdb_id');
-};
-
 function formatFetch(movies) {
-	var results = [];
-
-	movies.forEach(function(movie) {
+	var results = _.map(movies, function (movie) {
 		if (movie.torrents) {
-			results.push({
-				type: 'movie',
+			return {
 				imdb_id: movie.imdb_id,
 				title: movie.title,
 				year: movie.year,
-				genre: movie.genres,
+				genres: movie.genres,
 				rating: parseInt(movie.rating.percentage, 10) / 10,
-				runtime: movie.runtime,
-        images: movie.images,
-				image: movie.images.poster,
-				cover: movie.images.poster,
-				backdrop: movie.images.fanart,
         poster: movie.images.poster,
+        type: Generic.ItemType.MOVIE,
+        runtime: movie.runtime,
+        backdrop: movie.images.fanart,
+        subtitle: {},
 				synopsis: movie.synopsis,
 				trailer: movie.trailer,
-				certification: movie.certification,
 				torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
-				langs: movie.torrents,
-        subtitle: {}
-			});
+        langs: movie.torrents
+			};
 		}
 	});
 
@@ -73,24 +60,20 @@ function formatFetch(movies) {
 
 function formatDetail(movie) {
   return {
-    type: 'movie',
     imdb_id: movie.imdb_id,
     title: movie.title,
     year: movie.year,
-    genre: movie.genres,
+    genres: movie.genres,
     rating: parseInt(movie.rating.percentage, 10) / 10,
-    runtime: movie.runtime,
-    images: movie.images,
-    image: movie.images.poster,
-    cover: movie.images.poster,
-    backdrop: movie.images.fanart,
     poster: movie.images.poster,
+    type: Generic.ItemType.MOVIE,
+    runtime: movie.runtime,
+    backdrop: movie.images.fanart,
     synopsis: movie.synopsis,
+    subtitle: {},
     trailer: movie.trailer,
-    certification: movie.certification,
     torrents: movie.torrents['en'] !== null ? movie.torrents['en'] : movie.torrents[Object.keys(movie.torrents)[0]],
-    langs: movie.torrents,
-    subtitle: {}
+    langs: movie.torrents
   };
 }
 
@@ -139,11 +122,8 @@ function get(index, url, that) {
 	return deferred.promise;
 }
 
-MovieApi.prototype.resolveStream = function (src, filters, data) {
-  filters.lang = filters.lang ? filters.lang : this.lang;
-  filters.quality = filters.quality ? filters.quality : this.quality;
-
-	return data.langs[filters.lang][filters.quality];
+MovieApi.prototype.extractIds = function (items) {
+	return _.map(items.results, 'imdb_id');
 };
 
 MovieApi.prototype.fetch = function (filters) {
@@ -176,13 +156,6 @@ MovieApi.prototype.fetch = function (filters) {
 	return get(index, url, that).then(formatFetch);
 };
 
-MovieApi.prototype.random = function () {
-	var that = this;
-	var index = 0;
-	var url = that.apiURL[index] + 'random/movie';
-	return get(index, url, that).then(formatDetail);
-};
-
 MovieApi.prototype.detail = function (torrent_id, old_data, debug) {
   if (old_data) {
     return Q(old_data);
@@ -190,8 +163,23 @@ MovieApi.prototype.detail = function (torrent_id, old_data, debug) {
 
   var that = this;
 	var index = 0;
-	var url = that.apiURL[index] + 'movie' + torrent_id;
+	var url = that.apiURL[index] + 'movie/' + torrent_id;
 	return get(index, url, that).then(formatDetail);
+};
+
+MovieApi.prototype.random = function () {
+	var that = this;
+	var index = 0;
+	var url = that.apiURL[index] + 'random/movie';
+  return get(index, url, that).then(formatDetail);
+};
+
+MovieApi.prototype.resolveStream = function (src, filters, data) {
+  filters.lang = filters.lang ? filters.lang : this.lang;
+	var qualities = Object.keys(data.torrents);
+  filters.quality = filters.quality !== 'none' ? filters.quality : qualities[0];
+
+	return data.langs[filters.lang][filters.quality];
 };
 
 module.exports = MovieApi;
