@@ -5,21 +5,21 @@
   "main": "index.js",
   "butter": {
     "timeout": 20000,
-    "testArgs": "MovieApi?&apiURL=https://movies-v2.api-fetch.website/,cloudflare+https://movies-v2.api-fetch.website,http://localhost:5000/&lang=en&quality=720p"
+    "testArgs": "MovieApi?&apiURL=https://movies-v2.api-fetch.website/,cloudflare+https://movies-v2.api-fetch.website/,http://localhost:5000/&lang=en&quality=720p"
   },
   "scripts": {
-    "test": "tape ./node_modules/butter-test-provider/tests/*"
+    "test": "tape ./node_modules/butter-provider/tests/*"
   },
   "license": "MIT",
   "dependencies": {
-    "butter-provider": "^0.6.0",
+    "butter-provider": "^0.9.0",
     "butter-sanitize": "^0.1.1",
     "lodash": "^4.17.3",
     "q": "^1.4.1",
     "request": "^2.79.0"
   },
   "devDependencies": {
-    "butter-test-provider": "git+https://github.com/butterproviders/butter-test-provider",
+    "debug": "^2.6.0",
     "tape": "^4.6.3"
   },
   "repository": {
